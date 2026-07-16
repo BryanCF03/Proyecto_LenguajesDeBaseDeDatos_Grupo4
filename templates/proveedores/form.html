@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ "Editar" if proveedor else "Nuevo" }} proveedor{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h2>{{ "Editar proveedor" if proveedor else "Nuevo proveedor" }}</h2>
+    </div>
+
+    <form method="POST" class="form-card">
+        <label for="nombre_proveedor">Nombre del proveedor</label>
+        <input
+            type="text"
+            id="nombre_proveedor"
+            name="nombre_proveedor"
+            value="{{ proveedor.nombre_proveedor if proveedor else '' }}"
+            required
+        >
+
+        <label for="id_estado">Estado</label>
+        <select id="id_estado" name="id_estado" required>
+            <option value="1" {{ "selected" if proveedor and proveedor.id_estado == 1 }}>ACTIVO</option>
+            <option value="2" {{ "selected" if proveedor and proveedor.id_estado == 2 }}>INACTIVO</option>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ url_for('proveedores.listar') }}" class="btn">Cancelar</a>
+        </div>
+    </form>
+{% endblock %}

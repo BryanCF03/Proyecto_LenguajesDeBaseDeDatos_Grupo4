@@ -1,0 +1,61 @@
+-- ============================================================
+-- Proyecto: La Esquinita del Pan | Grupo 4
+-- 00_Estados_y_Secuencias.sql
+--Dilan Tenorio Rojas
+--CALVO HERRA LUIS ESTEBAN
+--CARVAJAL FLORES BRYAN ALBERTO
+--CORDERO GARCIA BRYAN STEVEN
+--VELASQUEZ MORALES EDUARDO JOSE
+-- IMPORTANTE: Este script debe ejecutarse ANTES que
+-- Avance2_Proyecto_Grupo4_Tablas.sql, porque:
+--   1. FIDE_Estados_TB es referenciada por FK en casi todas
+--      las demas tablas y no existia en el script original.
+--   2. Los triggers *_BI de las demas tablas usan secuencias
+--      (SEQ_ROLES, SEQ_TIPO, etc.) que tampoco existian.
+-- ============================================================
+
+-- ----------------------------
+-- Tabla Estados
+-- ----------------------------
+CREATE TABLE FIDE_Estados_TB (
+    ID_Estado      NUMBER(10) PRIMARY KEY,
+    Nombre_Estado  NVARCHAR2(100) NOT NULL
+);
+
+CREATE SEQUENCE SEQ_ESTADOS START WITH 1 INCREMENT BY 1 NOCACHE;
+
+CREATE OR REPLACE TRIGGER TRG_ESTADOS_BI
+BEFORE INSERT ON FIDE_Estados_TB FOR EACH ROW
+BEGIN
+    SELECT SEQ_ESTADOS.NEXTVAL INTO :NEW.ID_Estado FROM DUAL;
+END;
+/
+
+-- Datos semilla: el resto del sistema asume que 1 = ACTIVO y 2 = INACTIVO
+INSERT INTO FIDE_Estados_TB (Nombre_Estado) VALUES ('ACTIVO');
+INSERT INTO FIDE_Estados_TB (Nombre_Estado) VALUES ('INACTIVO');
+COMMIT;
+
+-- ----------------------------
+-- Secuencias para el resto de tablas
+-- (usadas por los triggers *_BI ya definidos en
+--  Avance2_Proyecto_Grupo4_Tablas.sql)
+--Dilan Tenorio Rojas
+-- ----------------------------
+CREATE SEQUENCE SEQ_ROLES            START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_TIPO             START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_CATEGORIAS       START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_UNIDADES         START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_METODOS_PAGO     START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_REFERENCIA       START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_PROVEEDORES      START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_USUARIOS         START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_PRODUCTOS        START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_INSUMOS          START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_INVENTARIO_ITEM  START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_MOVIMIENTO       START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_VENTA            START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_RECETAS          START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_COMPRAS          START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_ORDEN_PROD       START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE SEQ_FACTURA          START WITH 1 INCREMENT BY 1 NOCACHE;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}La Esquinita del Pan{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h1 class="brand">🥖 La Esquinita<br>del Pan</h1>
+            <nav>
+                <p class="nav-section">Compras &amp; Proveedores</p>
+                <a href="{{ url_for('proveedores.listar') }}" class="nav-link">Proveedores</a>
+                <a href="#" class="nav-link disabled">Compras</a>
+
+                <p class="nav-section">Catálogo</p>
+                <a href="#" class="nav-link disabled">Productos</a>
+                <a href="#" class="nav-link disabled">Insumos</a>
+                <a href="#" class="nav-link disabled">Categorías</a>
+                <a href="#" class="nav-link disabled">Recetas</a>
+
+                <p class="nav-section">Operación</p>
+                <a href="#" class="nav-link disabled">Inventario</a>
+                <a href="#" class="nav-link disabled">Producción</a>
+                <a href="#" class="nav-link disabled">Ventas</a>
+                <a href="#" class="nav-link disabled">Facturas</a>
+
+                <p class="nav-section">Administración</p>
+                <a href="#" class="nav-link disabled">Usuarios</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-container">
+                        {% for category, message in messages %}
+                            <div class="flash flash-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
