@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ "Editar" if insumo else "Nuevo" }} insumo{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h2>{{ "Editar insumo" if insumo else "Nuevo insumo" }}</h2>
+    </div>
+
+    <form method="POST" class="form-card">
+        <label for="nombre_insumo">Nombre del insumo</label>
+        <input
+            type="text"
+            id="nombre_insumo"
+            name="nombre_insumo"
+            value="{{ insumo.nombre_insumo if insumo else '' }}"
+            required
+        >
+
+        <label for="stock">Stock actual</label>
+        <input
+            type="number"
+            id="stock"
+            name="stock"
+            min="0"
+            value="{{ insumo.stock if insumo else 0 }}"
+            required
+        >
+
+        <label for="id_unidad_medida">Unidad de medida</label>
+        <select id="id_unidad_medida" name="id_unidad_medida" required>
+            {% for u in unidades %}
+            <option value="{{ u.id_unidad_medida }}"
+                {{ "selected" if insumo and insumo.id_unidad_medida == u.id_unidad_medida }}>
+                {{ u.nombre_medida }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="id_categoria">Categoría</label>
+        <select id="id_categoria" name="id_categoria" required>
+            {% for c in categorias %}
+            <option value="{{ c.id_categoria }}"
+                {{ "selected" if insumo and insumo.id_categoria == c.id_categoria }}>
+                {{ c.nombre_categoria }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="id_estado">Estado</label>
+        <select id="id_estado" name="id_estado" required>
+            <option value="1" {{ "selected" if insumo and insumo.id_estado == 1 }}>ACTIVO</option>
+            <option value="2" {{ "selected" if insumo and insumo.id_estado == 2 }}>INACTIVO</option>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ url_for('insumos.listar') }}" class="btn">Cancelar</a>
+        </div>
+    </form>
+
+    {% if not unidades or not categorias %}
+    <p class="hint" style="margin-top:16px;">
+        ⚠️ Necesitas al menos una Unidad de Medida y una Categoría activas antes de crear un insumo.
+    </p>
+    {% endif %}
+{% endblock %}

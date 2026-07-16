@@ -211,6 +211,27 @@ h2 { color: var(--ink); margin-top: 0; }
     gap: 10px;
 }
 
+.radio-group {
+    display: flex;
+    gap: 18px;
+    margin-top: 4px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin-top: 0 !important;
+    cursor: pointer;
+}
+
+.stock-bajo {
+    color: var(--danger);
+    font-weight: 700;
+}
+
 @media (max-width: 720px) {
     .layout { flex-direction: column; }
     .sidebar { width: auto; border-right: none; border-bottom: 6px solid var(--crust); }

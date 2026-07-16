@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}{{ "Editar" if item else "Nuevo" }} item de inventario{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h2>{{ "Editar item de inventario" if item else "Nuevo item de inventario" }}</h2>
+    </div>
+
+    <form method="POST" class="form-card">
+        {% if not item %}
+            <label>Este item corresponde a...</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="tipo_item" value="producto" checked onchange="toggleTipoItem()"> Producto
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="tipo_item" value="insumo" onchange="toggleTipoItem()"> Insumo
+                </label>
+            </div>
+
+            <div id="bloque-producto">
+                <label for="id_producto">Producto</label>
+                <select id="id_producto" name="id_producto">
+                    {% for p in productos %}
+                    <option value="{{ p.id_producto }}">{{ p.nombre_producto }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="bloque-insumo" style="display:none;">
+                <label for="id_insumo">Insumo</label>
+                <select id="id_insumo" name="id_insumo">
+                    {% for i in insumos %}
+                    <option value="{{ i.id_insumo }}">{{ i.nombre_insumo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% else %}
+            <label>Item</label>
+            <p><strong>{{ item.nombre_producto if item.id_producto else item.nombre_insumo }}</strong>
+               <span class="hint">({{ "Producto" if item.id_producto else "Insumo" }} — no se puede reasignar)</span></p>
+        {% endif %}
+
+        <label for="stock">Stock actual</label>
+        <input type="number" id="stock" name="stock" min="0" value="{{ item.stock if item else 0 }}" required>
+
+        <label for="stock_minimo">Stock mínimo</label>
+        <input type="number" id="stock_minimo" name="stock_minimo" min="0" value="{{ item.stock_minimo if item else 0 }}" required>
+
+        <label for="id_estado">Estado</label>
+        <select id="id_estado" name="id_estado" required>
+            <option value="1" {{ "selected" if item and item.id_estado == 1 }}>ACTIVO</option>
+            <option value="2" {{ "selected" if item and item.id_estado == 2 }}>INACTIVO</option>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ url_for('inventario.listar') }}" class="btn">Cancelar</a>
+        </div>
+    </form>
+
+    {% if not item and (not productos or not insumos) %}
+    <p class="hint" style="margin-top:16px;">
+        ⚠️ Necesitas al menos un Producto o un Insumo activo antes de crear un item de inventario.
+    </p>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleTipoItem() {
+        const esProducto = document.querySelector('input[name="tipo_item"]:checked').value === "producto";
+        document.getElementById("bloque-producto").style.display = esProducto ? "block" : "none";
+        document.getElementById("bloque-insumo").style.display = esProducto ? "none" : "block";
+    }
+</script>
+{% endblock %}

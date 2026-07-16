@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Inventario{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h2>Inventario</h2>
+        <a href="{{ url_for('inventario.nuevo') }}" class="btn btn-primary">+ Nuevo item</a>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Item</th>
+                <th>Tipo</th>
+                <th>Stock</th>
+                <th>Stock mínimo</th>
+                <th>Estado</th>
+                <th class="actions-col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for it in items %}
+            <tr>
+                <td>{{ it.id_inventario_item }}</td>
+                <td>{{ it.nombre_producto if it.id_producto else it.nombre_insumo }}</td>
+                <td>{{ "Producto" if it.id_producto else "Insumo" }}</td>
+                <td class="{{ 'stock-bajo' if it.stock <= it.stock_minimo }}">{{ it.stock }}</td>
+                <td>{{ it.stock_minimo }}</td>
+                <td>
+                    <span class="badge {{ 'badge-activo' if it.nombre_estado == 'ACTIVO' else 'badge-inactivo' }}">
+                        {{ it.nombre_estado }}
+                    </span>
+                </td>
+                <td class="actions-col">
+                    <a href="{{ url_for('inventario.editar', id_inventario_item=it.id_inventario_item) }}" class="btn btn-small">Editar</a>
+                    <form action="{{ url_for('inventario.eliminar', id_inventario_item=it.id_inventario_item) }}" method="POST" class="inline-form"
+                          onsubmit="return confirm('¿Dar de baja este item de inventario?');">
+                        <button type="submit" class="btn btn-small btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="empty-row">Aún no hay items de inventario registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

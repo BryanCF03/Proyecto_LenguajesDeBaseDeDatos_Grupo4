@@ -9,7 +9,7 @@
 --CORDERO GARCIA BRYAN STEVEN
 --VELASQUEZ MORALES EDUARDO JOSE
 -- ============================================================
--- Convencion de nombres:
+-- Nombres para que se referencien:
 --   FIDE_<Tabla>_TB_Listar_SP(p_cursor OUT SYS_REFCURSOR)
 --   FIDE_<Tabla>_TB_Insertar_SP(...)
 --   FIDE_<Tabla>_TB_Actualizar_SP(...)
@@ -622,7 +622,7 @@ BEGIN
 END;
 /
 
--- ================= ORDEN DETALLE (PK compuesta) =================
+-- ================= ORDEN DETALLE =================
 CREATE OR REPLACE PROCEDURE FIDE_Orden_Detalle_TB_Listar_SP(p_ID_Orden_Produccion IN NUMBER, p_cursor OUT SYS_REFCURSOR)
 IS
 BEGIN
@@ -649,7 +649,7 @@ BEGIN
 END;
 /
 
--- ================= ORDEN INSUMO (PK compuesta, sin ID_Estado -> baja fisica) =================
+-- ================= ORDEN INSUMO =================
 CREATE OR REPLACE PROCEDURE FIDE_Orden_Insumo_TB_Listar_SP(p_ID_Orden_Produccion IN NUMBER, p_cursor OUT SYS_REFCURSOR)
 IS
 BEGIN
@@ -696,7 +696,7 @@ BEGIN
 END;
 /
 
--- ================= TELEFONO PROVEEDOR (PK compuesta) =================
+-- ================= TELEFONO PROVEEDOR  =================
 CREATE OR REPLACE PROCEDURE FIDE_Telefono_Proveedor_TB_Listar_SP(p_ID_Proveedor IN NUMBER, p_cursor OUT SYS_REFCURSOR)
 IS
 BEGIN

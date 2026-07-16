@@ -17,12 +17,12 @@
 
                 <p class="nav-section">Catálogo</p>
                 <a href="#" class="nav-link disabled">Productos</a>
-                <a href="#" class="nav-link disabled">Insumos</a>
+                <a href="{{ url_for('insumos.listar') }}" class="nav-link">Insumos</a>
                 <a href="#" class="nav-link disabled">Categorías</a>
                 <a href="#" class="nav-link disabled">Recetas</a>
 
                 <p class="nav-section">Operación</p>
-                <a href="#" class="nav-link disabled">Inventario</a>
+                <a href="{{ url_for('inventario.listar') }}" class="nav-link">Inventario</a>
                 <a href="#" class="nav-link disabled">Producción</a>
                 <a href="#" class="nav-link disabled">Ventas</a>
                 <a href="#" class="nav-link disabled">Facturas</a>
@@ -46,5 +46,6 @@
             {% block content %}{% endblock %}
         </main>
     </div>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

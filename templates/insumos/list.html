@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Insumos{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h2>Insumos</h2>
+        <a href="{{ url_for('insumos.nuevo') }}" class="btn btn-primary">+ Nuevo insumo</a>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Stock</th>
+                <th>Unidad</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th class="actions-col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in insumos %}
+            <tr>
+                <td>{{ i.id_insumo }}</td>
+                <td>{{ i.nombre_insumo }}</td>
+                <td>{{ i.stock }}</td>
+                <td>{{ i.nombre_medida }}</td>
+                <td>{{ i.nombre_categoria }}</td>
+                <td>
+                    <span class="badge {{ 'badge-activo' if i.nombre_estado == 'ACTIVO' else 'badge-inactivo' }}">
+                        {{ i.nombre_estado }}
+                    </span>
+                </td>
+                <td class="actions-col">
+                    <a href="{{ url_for('insumos.editar', id_insumo=i.id_insumo) }}" class="btn btn-small">Editar</a>
+                    <form action="{{ url_for('insumos.eliminar', id_insumo=i.id_insumo) }}" method="POST" class="inline-form"
+                          onsubmit="return confirm('¿Dar de baja este insumo?');">
+                        <button type="submit" class="btn btn-small btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="empty-row">Aún no hay insumos registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
