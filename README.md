@@ -11,7 +11,7 @@ disparadores); Python solo llama a esos procedimientos.
 
 ## 1. Orden de ejecución de los scripts SQL
 
-Abre **SQL Developer**, conéctate a tu Autonomous Database, y ejecuta los
+Abre SQL Developer, conéctate a tu Autonomous Database, y ejecuta los
 scripts de la carpeta `sql/` **en este orden exacto**:
 
 1. `00_Estados_y_Secuencias.sql` — crea `FIDE_Estados_TB`  y
@@ -20,15 +20,17 @@ scripts de la carpeta `sql/` **en este orden exacto**:
 3. `Avance2_Proyecto_Grupo4_Procedimientos.sql` — procedimientos
    (Estados, Roles, Proveedores, Usuarios, Compras).
 4. `Avance2_Proyecto_Grupo4_Procedimientos_Extra.sql` 
-   (con `SYS_REFCURSOR`) para **cada** tabla.
+   (con `SYS_REFCURSOR`) para cada tabla.
 5. `Avance2_Proyecto_Grupo4_Funciones.sql` — funciones originales, sin
    cambios (le agregué el `/` al final de cada función porque en Oracle
-   hace falta para separar bloques PL/SQL al correr el script completo).
+   hace falta para separar bloques PL/SQL al correr el script completo como explico el profe).
+6. `Vistas_y_Cursores.sql` — script para cumplir con las vistas, cursores 
+   funciones minimas de la base de datos (aun falta bastante para completar)
    
 ## 2. Configurar el wallet de Oracle Autonomous Database
 ## El proyecto para funcionar debe tener la base de datos en la nube corriendo
 ## 4. Instalar dependencias y correr el proyecto
-```bash
+
 # Crear y activar entorno virtual
 python -m venv venv
 venv\Scripts\activate        # Windows
